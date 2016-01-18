@@ -24,7 +24,7 @@ struct Zug {
 ////////////////////////////////////////
 
 // setzt bei einem erstelltem Zug die Pointer auf 'nullptr'
-bool initialisiereZug(Zug *zug);
+void initialisiereZug(Zug *zug);
 
 // Kuppelt einen Wagen entweder vorn oder hinten ein, aber es dürfen nur
 // Fahrzeuge mit der gleichen Kupplung zusammen geführt werden. Nur wenn dies
@@ -37,12 +37,12 @@ bool ankuppeln(Zug             *zug,      // Liste in welche der Wagen
 
 // Koppelt einen Wagen ab und speichert ihn in die angegebene Variable, sollte
 // die Liste leer sein, also kein Zug vorhanden so wird 'false' zurückgeben.
-bool abkuppeln(Zug             *zug,      // Liste wo ein Wagen entnommen werden
-                                          // soll
-               Schienenfahrzeug fahrzeug, // Variable in welche der entkoppelte
-                                          // Wagen gespeichert wird
-               Position         pos);     // wo soll dieser Wagen entnommen
-                                          // werden: 0=vorn, 1=hinten
+bool abkuppeln(Zug              *zug,      // Liste wo ein Wagen entnommen
+                                           // werden soll
+               Schienenfahrzeug *fahrzeug, // Variable in welche der entkoppelte
+                                           // Wagen gespeichert wird
+               Position          pos);     // wo soll dieser Wagen entnommen
+                                           // werden: 0=vorn, 1=hinten
 
 // trennt einen Zug nach einem bestimmten Wagen ab, der hintere Teil bildet dann
 // einen neuen Zug welcher der Funktion auch übergeben werden muss. Sollte der
@@ -63,13 +63,15 @@ bool verbinden(Zug *zug1,
 unsigned int achsanzahl(Zug *zug);
 
 // gibt die Postion des nächsten Triebfahrzeuges im Zug ab einschließlich einer
-// vorgegebenen Fahrzeugnummer zurück.
+// vorgegebenen Fahrzeugnummer zurück. Sollte kein weiteres Triebfahrzeug
+// vorhanden sein so wird '0' zurückgeben, da dies keine zulässige
+// Fahrzeugnummer ist.
 int triebfahrzeugposition(Zug *zug,
                           int  position); // Position ab welcher gesucht werden
                                           // soll
 
 // verschrottet einen Zug und macht ihn zu einen leeren Zug, alle Wagen dabei
-// aus dem Speicher gelöscht. Wenn dies funktioniert wird 'true' zurückgeben.
-bool verschrotteZug(Zug *zug);
+// aus dem Speicher gelöscht.
+void verschrotteZug(Zug *zug);
 
 #endif /* ifndef ZUG_H */

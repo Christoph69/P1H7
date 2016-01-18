@@ -1,7 +1,7 @@
 CPP_FILES := $(wildcard src/*.cpp)
 OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 LD_FLAGS :=
-CC_FLAGS :=
+CC_FLAGS := -std=c++11
 CPP := clang++
 EXEC := test.exe
 
