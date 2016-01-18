@@ -1,0 +1,7 @@
+// Zug.cpp
+
+#include "../inc/Zug.h"
+
+/////////////////////////
+// Funktionen für den Zug
+/////////////////////////
