@@ -110,6 +110,7 @@ bool abkuppeln(Zug *zug, Schienenfahrzeug *fahrzeug, Position pos) {
     delete zug->first;
     zug->first = next;
 
+    // Test ob kein Wagen mehr vorhanden ist
     if (next == nullptr) zug->last = nullptr;
     else next->prev = nullptr;
     return true;
@@ -122,9 +123,48 @@ bool abkuppeln(Zug *zug, Schienenfahrzeug *fahrzeug, Position pos) {
     delete zug->last;
     zug->last = prev;
 
+    // Test ob kein Wagen mehr vorhanden ist
     if (prev == nullptr) zug->first = nullptr;
     else prev->next = nullptr;
     return true;
   }
   return false;
+}
+
+bool trennen(Zug *zug1, Zug *zug2, int  nachPos) {
+  if (zug1->first == nullptr) return false;
+
+  Wagen *current = zug1->first;
+
+  for (int i = 1; i < nachPos; i++) {
+    if (current == nullptr) return false;
+
+    current = current->next;
+  }
+
+  // testen ob nach der Position des letzen Wagen des ersten Zuges noch ein
+  // Wagen folgt
+  if (current->next == nullptr) return false;
+
+  zug2->first       = current->next;
+  zug2->last        = zug1->last;
+  zug1->last        = current;
+  current->next     = nullptr;
+  zug2->first->prev = nullptr;
+  return true;
+}
+
+bool verbinden(Zug *zug1, Zug *zug2) {
+  // Test ob in beiden Zügen mind. ein Wagen vorhanden ist
+  if ((zug1->first == nullptr) || (zug2->first == nullptr)) return false;
+
+  // Test ob die Kupplungsart übereinstimmt
+  if (zug1->first->fahrzeug.kupplungsart !=
+      zug2->first->fahrzeug.kupplungsart) return false;
+
+  zug1->last->next  = zug2->first;
+  zug2->first->prev = zug1->last;
+  zug1->last        = zug2->last;
+  initialisiereZug(zug2);
+  return true;
 }

@@ -8,12 +8,14 @@ enum Position { VORN, HINTEN };
 // doppelt verkettete List für Schienfahrzeuge
 ////////////////////////////////////////////////
 
+// Struktur für die Elemente des Zuges
 struct Wagen {
   Schienenfahrzeug fahrzeug;
   Wagen           *next;
   Wagen           *prev;
 };
 
+// Der Listenanker der liste Zug
 struct Zug {
   Wagen *first;
   Wagen *last;
