@@ -56,8 +56,7 @@ int triebfahrzeugposition(Zug *zug, int  position) {
   }
 
   while (current != nullptr) {
-    if (current->fahrzeug.spezifischeDaten.triebfahrzeug.nennleistungPS >
-        0) return position;
+    if (current->fahrzeug.ArtDesFahrzeugs == 0) return position;
 
     position++;
     current = current->next;
@@ -66,11 +65,9 @@ int triebfahrzeugposition(Zug *zug, int  position) {
 }
 
 bool ankuppeln(Zug *zug, Schienenfahrzeug fahrzeug, Position pos) {
-  // Prüfen ob die Kupplungenart die gleiche ist
-  if (zug->first->fahrzeug.kupplungsart != fahrzeug.kupplungsart) return false;
-
   Wagen *pWagen = erstelleWagen(fahrzeug);
 
+  // es konnte kein neuer Wagen auf dem Heap erstellt werden
   if (pWagen == nullptr) return false;
 
   // Zug noch leer
@@ -79,6 +76,9 @@ bool ankuppeln(Zug *zug, Schienenfahrzeug fahrzeug, Position pos) {
     zug->last  = pWagen;
     return true;
   }
+
+  // Prüfen ob die Kupplungenart die gleiche ist, wen nicht abbruch
+  if (zug->first->fahrzeug.kupplungsart != fahrzeug.kupplungsart) return false;
 
   // mind. ein Zug vorhanden
   // vorne einkoppeln

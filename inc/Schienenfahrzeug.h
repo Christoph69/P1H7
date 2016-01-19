@@ -3,6 +3,7 @@
 
 const unsigned int MAX_NAMENSLAENGE = 60;
 
+enum Fahrzeugart { TRIEBFAHRZEUG, GUETERWAGEN, PERSONENWAGEN, BAHNDIENSTWAGEN };
 enum Traktionsart { DAMPF, DIESEL, ELEKTRO };
 enum Ladungsart { SCHUETTGUT, STUECKGUT, FLUESSIGKEITEN, GEFRIERGUT };
 enum Decks { NORMAL, DOPPELSTOCK };
@@ -37,6 +38,7 @@ struct Bahndienstfahrzeuge {
 //////////////////////////////////////
 
 struct Schienenfahrzeug {
+  Fahrzeugart ArtDesFahrzeugs;
   union {
     Triebfahrzeuge      triebfahrzeug;
     Gueterwagen         gueterwagen;
