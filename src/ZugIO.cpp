@@ -31,7 +31,8 @@ Schienenfahrzeug eingabeSchienenfahrzeug() {
     std::cout << " [1] Stueckgut" << std::endl;
     std::cout << " [2] Fluessigkeiten" << std::endl;
     std::cout << " [3] Gefriergut" << std::endl << "Eingabe: ";
-    std::cin >> fahrzeug.spezifischeDaten.gueterwagen.ladungsart;
+    std::cin >> wert;
+    fahrzeug.spezifischeDaten.gueterwagen.ladungsart = (Ladungsart)wert;
     std::cout << "Gefahrgutklasse: ";
     std::cin >> fahrzeug.spezifischeDaten.gueterwagen.gefahrgutklasse;
     break;
@@ -42,12 +43,14 @@ Schienenfahrzeug eingabeSchienenfahrzeug() {
     std::cout << "Art des Decks: " << std::endl;
     std::cout << " [0] Normal" << std::endl;
     std::cout << " [1] Doppelstock" << std::endl << "Eingabe: ";
-    std::cin >> fahrzeug.spezifischeDaten.personenwagen.deck;
+    std::cin >> wert;
+    fahrzeug.spezifischeDaten.personenwagen.deck = (Decks)wert;
     std::cout << "Preisklassen:" << std::endl;
     std::cout << " [0] 1. Klasse" << std::endl;
     std::cout << " [1] 2. Klasse" << std::endl;
     std::cout << " [2] 1. und 2. Klasse" << std::endl << "Eingabe: ";
-    std::cin >> fahrzeug.spezifischeDaten.personenwagen.preisklassen;
+    std::cin >> wert;
+    fahrzeug.spezifischeDaten.personenwagen.preisklassen = (Preisklassen)wert;
     std::cout << "Klimaanlage:" << std::endl;
     std::cout << " [0] Nein" << std::endl;
     std::cout << " [1] Ja" << std::endl << "Eingabe: ";
@@ -62,7 +65,26 @@ Schienenfahrzeug eingabeSchienenfahrzeug() {
     std::cout << " [3] Schneeflug" << std::endl;
     std::cout << " [4] Werkstattwagen" << std::endl;
     std::cout << " [5] Gleisstopfmaschine" << std::endl << "Eingabe: ";
-    std::cin >> fahrzeug.spezifischeDaten.bahndienstwagen.wagenart;
+    std::cin >> wert;
+    fahrzeug.spezifischeDaten.bahndienstwagen.wagenart = (Art)wert;
     break;
   }
+  std::cout << "Anzahl der Achsen: ";
+  std::cin >> fahrzeug.AnzahlAchsen;
+  std::cout << "Laenge über den Puffer: ";
+  std::cin >> fahrzeug.langeUeberPuffer;
+  std::cout << "Leermasse: ";
+  std::cin >> fahrzeug.leermasse;
+  std::cout << "Maximale Fahrzeugmasse: ";
+  std::cin >> fahrzeug.maxFahrzeugmasse;
+  std::cout << "Kupplungsart: " << std::endl;
+  std::cout << " [0] Hakenkupplung" << std::endl;
+  std::cout << " [1] Mittelpufferkupplung" << std::endl << "Eingabe: ";
+  std::cin >> wert;
+  fahrzeug.kupplungsart = (Kupplungsart)wert;
+  std::cout << "Zielbahnhof: ";
+  std::cin >> fahrzeug.zielbahnhof;
+  std::cout << "Heimatbahnbetriebswerk: ";
+  std::cin >> fahrzeug.heimatbahnbetriebswerk;
+  return fahrzeug;
 }
