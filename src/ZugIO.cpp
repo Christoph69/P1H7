@@ -240,4 +240,18 @@ static void ausgabeSchienenfahrzeug(Schienenfahrzeug fahrzeug) {
     std::endl;
 }
 
-void ausgabeZug(Zug *zug) {}
+void ausgabeZug(Zug *zug) {
+  // Test ob ein Wagen in der Zug-Liste vorhanden ist
+  if (zug->first != nullptr) {
+    Wagen *current = zug->first;
+
+    while (current != nullptr) {
+      ausgabeSchienenfahrzeug(current->fahrzeug);
+      std::cout << std::endl;
+      current = current->next;
+    }
+  }
+
+  // Ausgabe wenn kein Wagon vorhanden ist
+  else std::cerr << "Keine Wagen vorhanden!" << std::endl;
+}
