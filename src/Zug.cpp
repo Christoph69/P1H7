@@ -65,13 +65,13 @@ int triebfahrzeugposition(Zug *zug, int  position) {
 }
 
 bool ankuppeln(Zug *zug, Schienenfahrzeug fahrzeug, Position pos) {
-  Wagen *pWagen = erstelleWagen(fahrzeug);
-
-  // es konnte kein neuer Wagen auf dem Heap erstellt werden
-  if (pWagen == nullptr) return false;
-
   // Zug noch leer
   if (zug->first == nullptr) {
+    Wagen *pWagen = erstelleWagen(fahrzeug);
+
+    // es konnte kein neuer Wagen auf dem Heap erstellt werden
+    if (pWagen == nullptr) return false;
+
     zug->first = pWagen;
     zug->last  = pWagen;
     return true;
@@ -80,9 +80,15 @@ bool ankuppeln(Zug *zug, Schienenfahrzeug fahrzeug, Position pos) {
   // Prüfen ob die Kupplungenart die gleiche ist, wen nicht abbruch
   if (zug->first->fahrzeug.kupplungsart != fahrzeug.kupplungsart) return false;
 
+  // beschaffen des Speichers für den neuen Wagen
+  Wagen *pWagen = erstelleWagen(fahrzeug);
+
+  // es konnte kein neuer Wagen auf dem Heap erstellt werden
+  if (pWagen == nullptr) return false;
+
   // mind. ein Zug vorhanden
   // vorne einkoppeln
-  if (pos == 0) {
+  if (pos == VORN) {
     pWagen->next     = zug->first;
     zug->first->prev = pWagen;
     zug->first       = pWagen;
@@ -90,7 +96,7 @@ bool ankuppeln(Zug *zug, Schienenfahrzeug fahrzeug, Position pos) {
   }
 
   // hinten einkoppeln
-  if (pos == 1) {
+  if (pos == HINTEN) {
     pWagen->prev    = zug->last;
     zug->last->next = pWagen;
     zug->last       = pWagen;
@@ -104,28 +110,35 @@ bool abkuppeln(Zug *zug, Schienenfahrzeug *fahrzeug, Position pos) {
   if (zug->first == nullptr) return false;
 
   // vorne entkoppeln
-  if (pos == 0) {
+  if (pos == VORN) {
     *fahrzeug = zug->first->fahrzeug;
-    Wagen *next = zug->first->next;
-    delete zug->first;
-    zug->first = next;
 
-    // Test ob kein Wagen mehr vorhanden ist
-    if (next == nullptr) zug->last = nullptr;
-    else next->prev = nullptr;
+    if (zug->first->next != nullptr) {
+      zug->first = zug->first->next;
+      delete zug->first->prev;
+      zug->first->prev = nullptr;
+    }
+    else {
+      // wenn nach dem abkoppeln kein Wagen mehr vorhanden ist
+      delete zug->first;
+      initialisiereZug(zug);
+    }
     return true;
   }
 
   // hinten entkoppeln
-  if (pos == 1) {
+  if (pos == HINTEN) {
     *fahrzeug = zug->last->fahrzeug;
-    Wagen *prev = zug->last->prev;
-    delete zug->last;
-    zug->last = prev;
 
-    // Test ob kein Wagen mehr vorhanden ist
-    if (prev == nullptr) zug->first = nullptr;
-    else prev->next = nullptr;
+    if (zug->last->prev != nullptr) {
+      zug->last = zug->last->prev;
+      delete zug->last->next;
+      zug->last->next = nullptr;
+    }
+    else {
+      delete zug->last;
+      initialisiereZug(zug);
+    }
     return true;
   }
   return false;

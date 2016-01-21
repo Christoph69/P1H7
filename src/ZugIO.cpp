@@ -93,6 +93,7 @@ Schienenfahrzeug eingabeSchienenfahrzeug() {
   std::cin >> fahrzeug.zielbahnhof;
   std::cout << "Heimatbahnbetriebswerk: ";
   std::cin >> fahrzeug.heimatbahnbetriebswerk;
+  std::cout << std::endl;
   return fahrzeug;
 }
 
@@ -243,9 +244,12 @@ static void ausgabeSchienenfahrzeug(Schienenfahrzeug fahrzeug) {
 void ausgabeZug(Zug *zug) {
   // Test ob ein Wagen in der Zug-Liste vorhanden ist
   if (zug->first != nullptr) {
-    Wagen *current = zug->first;
+    Wagen *current     = zug->first;
+    int    WagenNummer = 1;
 
     while (current != nullptr) {
+      std::cout << "Wagennummer: " << WagenNummer << std::endl;
+      WagenNummer++;
       ausgabeSchienenfahrzeug(current->fahrzeug);
       std::cout << std::endl;
       current = current->next;
